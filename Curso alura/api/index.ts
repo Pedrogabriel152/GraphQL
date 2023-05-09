@@ -1,18 +1,14 @@
 import { ApolloServer } from 'apollo-server';
 import path from 'path';
 
-// Schemas
-const userSchema = require('./User/schema/user.graphql');
-const turmaSchema = require('./Turma/schema/turma.graphql');
-const matriculaSchema = require('./Matricula/schema/matricula.graphql');
+// User
+import { userSchema, UsersApi, userResolvers } from './User';
 
-// Resolvers
-import { userResolvers } from './User/resolvers/userResolvers';
-import { turmasResolvers } from './Turma/resolvers/turmaResolvers';
+// Turma
+import { turmaSchema, TurmasAPI, turmasResolvers } from './Turma';
 
-// Controllers
-import UsersApi from './User/datasource/user';
-import TurmasAPI from './Turma/datasource/turma';
+// Matricula
+import { matriculaSchema, matriculaResolvers, MatriculaApi } from './Matricula';
 
 const typeDefs = [
     userSchema,
@@ -22,7 +18,8 @@ const typeDefs = [
 
 const resolvers = [
     userResolvers,
-    turmasResolvers
+    turmasResolvers,
+    matriculaResolvers
 ];
 
 const dbConfig = {
@@ -39,7 +36,8 @@ const server = new ApolloServer({
     dataSources: () => {
         return {
             usersApi: new UsersApi(),
-            turmasApi: new TurmasAPI(dbConfig)
+            turmasApi: new TurmasAPI(dbConfig),
+            matriculaApi: new MatriculaApi(dbConfig)
         }
     }
 });
