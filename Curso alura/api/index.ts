@@ -4,6 +4,7 @@ import path from 'path';
 // Schemas
 const userSchema = require('./User/schema/user.graphql');
 const turmaSchema = require('./Turma/schema/turma.graphql');
+const matriculaSchema = require('./Matricula/schema/matricula.graphql');
 
 // Resolvers
 import { userResolvers } from './User/resolvers/userResolvers';
@@ -15,7 +16,8 @@ import TurmasAPI from './Turma/datasource/turma';
 
 const typeDefs = [
     userSchema,
-    turmaSchema
+    turmaSchema,
+    matriculaSchema
 ];
 
 const resolvers = [
