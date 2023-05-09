@@ -20,11 +20,16 @@
   "homepage": "https://github.com/alura-cursos/1922-graphql#readme",
   "dependencies": {
     "@apollo/datasource-rest": "^6.0.0",
+    "@graphql-tools/schema": "^9.0.19",
+    "@graphql-tools/utils": "^9.2.1",
     "apollo-server": "^3.12.0",
+    "apollo-server-caching": "^3.3.0",
+    "datasource-sql": "^2.1.0",
     "graphql": "^16.6.0",
     "graphql-tools": "^8.3.20",
     "json-server": "^0.16.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "ts-node-dev": "^2.0.0",
