@@ -39,6 +39,6 @@ scalar DateTime
     type RespostaPadrao implements Resposta {
         mensagem: String!
     }
-`
+`;
 
 module.exports = turmaSchema;

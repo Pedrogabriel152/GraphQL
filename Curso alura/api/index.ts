@@ -28,7 +28,7 @@ const dbConfig = {
     connection: {
         filename: path.resolve(__dirname, './data/database.db')
     }
-}
+};
 
 const server = new ApolloServer({ 
     typeDefs, 
@@ -43,5 +43,5 @@ const server = new ApolloServer({
 });
 
 server.listen().then(({url}) => {
-    console.log(`Servidor rodando na porta ${url}`)
+    console.log(`Servidor rodando na porta ${url}`);
 })

@@ -17,6 +17,6 @@ const turmasResolvers = {
         atualizaTurma: (_, novosDados, { dataSources }) => dataSources.turmasApi.atualizaTurma(novosDados),
         deletaTurma: (_, { id }, { dataSources }) => dataSources.turmasApi.deletaTurma(id),
     },
-}
+};
 
-export {turmasResolvers}
+export {turmasResolvers};

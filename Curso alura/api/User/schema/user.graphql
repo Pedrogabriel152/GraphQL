@@ -59,6 +59,6 @@ const userSchema = gql`
         mensagem: String!
         user: User!
     }
-`
+`;
 
 module.exports = userSchema;

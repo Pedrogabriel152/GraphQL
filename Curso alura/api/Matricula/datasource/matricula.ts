@@ -11,7 +11,9 @@ class MatriculaApi extends SQLDataSource {
     } 
 
     public async matricularEstudante({estudante, turma}){
-        
+
+        this.Resposta.mensagem = "Matricula adicionada com sucesso";
+        return this.Resposta;
     }
 }
 

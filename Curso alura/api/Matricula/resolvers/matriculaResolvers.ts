@@ -14,4 +14,4 @@ const matriculaResolvers = {
     },
 }
 
-export {matriculaResolvers}
+export {matriculaResolvers};

@@ -7,7 +7,7 @@ class TurmasAPI extends SQLDataSource {
       super(dbConfig);
       this.Resposta = {
         mensagem: ""
-      }
+      };
   }
 
   public async getTurmas() {
@@ -15,39 +15,39 @@ class TurmasAPI extends SQLDataSource {
   }
 
   public  async getTurma(id: number) {
-    const turma = await this.db.select('*').from('turmas').where({ id: Number(id)})
-    return turma[0]
+    const turma = await this.db.select('*').from('turmas').where({ id: Number(id)});
+    return turma[0];
   }
   
   public async incluiTurma(novaTurma) {
     const novaTurmaId = await this.db
       .insert(novaTurma)
       .returning('id')
-      .into('turmas')
+      .into('turmas');
 
-    const turmaInserida = await this.getTurma(novaTurmaId[0].id)
-    return ({ ...turmaInserida })
+    const turmaInserida = await this.getTurma(novaTurmaId[0].id);
+    return ({ ...turmaInserida });
   }
 
   public  async atualizaTurma(novosDados) {
     await this.db
       .update({ ...novosDados.turma })
       .where({ id: Number(novosDados.id) })
-      .into('turmas')
+      .into('turmas');
   
-    const turmaAtualizada = await this.getTurma(novosDados.id)
+    const turmaAtualizada = await this.getTurma(novosDados.id);
     return ({
       ...turmaAtualizada
-    })
+    });
   }
 
   public  async deletaTurma(id) {
     await this.db('turmas')
       .where({ id: id })
-      .del()
+      .del();
   
-    this.Resposta.mensagem = "registro deletado"
-    return this.Resposta
+    this.Resposta.mensagem = "registro deletado";
+    return this.Resposta;
   }
 }
 

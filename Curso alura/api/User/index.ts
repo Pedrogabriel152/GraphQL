@@ -7,4 +7,4 @@ import { userResolvers } from './resolvers/userResolvers';
 // Controllers
 import UsersApi from './datasource/user';
 
-export {userResolvers, userSchema, UsersApi}
+export {userResolvers, userSchema, UsersApi};

@@ -9,7 +9,7 @@ class UsersApi extends RESTDataSource {
         this.respostaCustom = {
             code: 200,
             mensagem: 'Operação efetuada com sucesso'
-        }
+        };
     }
 
     public async getUsers() {
@@ -35,7 +35,7 @@ class UsersApi extends RESTDataSource {
         const role = await this.get(`roles?type=${user.role}`);
         user.role = role[0].id;
         await this.post('users', user);
-        console.log(user)
+        console.log(user);
         return ({
             ...user,
             role: role[0]
@@ -56,7 +56,7 @@ class UsersApi extends RESTDataSource {
     }
 
     public async deletaUser(id: number) {
-        await this.delete(`users/${id}`)
+        await this.delete(`users/${id}`);
         
         return this.respostaCustom;
     }
