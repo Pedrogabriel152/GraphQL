@@ -32,6 +32,25 @@ class MatriculaApi extends SQLDataSource {
         console.log(matriculas)
         return matriculas;
     }
+
+    public async deletarMatricula(idMatricula) {
+        await this.db('matriculas')
+        .where({ id: Number(idMatricula) })
+        .del()
+        
+        this.Resposta.mensagem = "registro deletado"
+        return this.Resposta
+    }
+
+    public async cancelarMatricula(idMatricula) {
+        await this.db
+          .update({ status: "cancelado" })
+          .where({ id: Number(idMatricula) })
+          .into('matriculas')
+     
+        this.Resposta.mensagem = "matrícula cancelada"
+        return this.Resposta
+    }
 }
 
 export default MatriculaApi;
