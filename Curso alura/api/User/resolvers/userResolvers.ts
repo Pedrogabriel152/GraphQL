@@ -24,6 +24,10 @@ const userResolvers = {
         adicionaUser: async (root, user, { dataSources }) => dataSources.usersApi.adicionaUser(user),
         atualizaUser: async (root, novosDados, { dataSources }) => dataSources.usersApi.atualizaUser(novosDados),
         deletaUser: async (root, { id }, { dataSources }) => dataSources.usersApi.deletaUser(id)
+    },
+
+    User: {
+        matriculas: (parent, __,{ dataSources }) => dataSources.matriculaApi.getMatriculasPorUser(parent.id),
     }
 }
 

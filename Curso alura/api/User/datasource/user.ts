@@ -1,51 +1,61 @@
-import { RESTDataSource } from '@apollo/datasource-rest';
+import { SQLDataSource } from 'datasource-sql';
 
-class UsersApi extends RESTDataSource {
+class UsersApi extends SQLDataSource {
     public respostaCustom;
 
-    constructor() {
-        super();
-        this.baseURL = 'http://localhost:3000';
-        this.respostaCustom = {
-            code: 200,
-            mensagem: 'Operação efetuada com sucesso'
-        };
-    }
+    public Resposta: any
+
+  constructor(dbConfig){
+      super(dbConfig);
+      this.respostaCustom = {
+        code: 200,
+        mensagem: "Operação realizada com sucesso!"
+      };
+  }
 
     public async getUsers() {
-        const users = await this.get('/users');
+        const users = await this.db.select('*').from('users')
         return users.map(async user => ({
             id: user.id,
             nome: user.nome,
-            ativo: user.ativo,
+            ativo: user.ativo? true : false,
             email: user.email,
-            role: await this.get(`/roles/${user.role}`)
+            role: await this.db.select('*').from('tipo').where({id: Number(user.role)})
         }));
     }
 
     public async getUserById(id) {
-        const user = await this.get(`/users/${id}`);
-        user.role = await this.get(`/roles/${user.role}`);
-        return user;
+        const user = await this.db.select('*').from('users').where({id: Number(id)});
+        console.log(user)
+        if(user[0].ativo){
+            user[0].ativo = true;
+        } else {
+            user[0].ativo = false
+        }
+        user[0].role = await this.db.select('*').from('tipo').where({id: Number(user[0].role)});
+        return user[0];
     }
 
     public async adicionaUser({user}){
-        const users = await this.get('/users');
-        user.id = users.length + 1;
-        const role = await this.get(`roles?type=${user.role}`);
+        const role = await this.db.select('*').from('tipo').where({tipo: String(user.role)});
         user.role = role[0].id;
-        await this.post('users', user);
-        console.log(user);
+        console.log(user)
+        await this.db.insert(user).into('users');
         return ({
-            ...user,
+            id: user.id,
+            nome: user.nome,
+            ativo: user.ativo,
+            email: user.email,
             role: role[0]
         });
     }
 
     public async atualizaUser(novosDados){
-        const role = await this.get(`roles?type=${novosDados.user.role}`);
-
-        await this.put(`users/${novosDados.id}`, {...novosDados.user, role: role[0].id});
+        const role = await this.db.select('*').from('tipo').where({tipo: String(novosDados.user.role)});
+        novosDados.user.role = role[0].id;
+        await this.db.update({ ...novosDados.user })
+        .where({ id: Number(novosDados.id) })
+        .into('users');
         return ({
             ...this.respostaCustom,
             user: {
@@ -56,11 +66,24 @@ class UsersApi extends RESTDataSource {
     }
 
     public async deletaUser(id: number) {
-        await this.delete(`users/${id}`);
-        
+        await this.db('users')
+            .where({ id: id })
+            .del();
         return this.respostaCustom;
     }
     
+    public async getDocente(id: number){
+        const turma = await this.db.select('*').from('turmas').where({id: Number(id)});
+
+        const users = await this.db.select('*')
+            .from('users').where({role: Number(2)})
+
+        const matricula = await this.db('users').select('users.nome', 'users.email', 'users.ativo', 'tipo.tipo')
+            .join('tipo', 'tipo.id', 'users.role')
+            .where({role: 2})
+
+            console.log(matricula);
+    }
 }
 
 export default UsersApi;

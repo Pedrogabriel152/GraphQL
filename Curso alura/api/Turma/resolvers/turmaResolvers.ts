@@ -17,6 +17,11 @@ const turmasResolvers = {
         atualizaTurma: (_, novosDados, { dataSources }) => dataSources.turmasApi.atualizaTurma(novosDados),
         deletaTurma: (_, { id }, { dataSources }) => dataSources.turmasApi.deletaTurma(id),
     },
+
+    Turma: {
+        matriculas: (parent, __,{ dataSources }) => dataSources.matriculaApi.getMatriculasPorTurma(parent.id),
+        docente: (parent, __, { dataSources }) => dataSources.usersApi.getDocente(parent.id),
+    }
 };
 
 export {turmasResolvers};

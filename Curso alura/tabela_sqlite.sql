@@ -16,6 +16,20 @@ CREATE TABLE matriculas(
 	created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE  Table users(
+	id INTEGER PRIMARY KEY,
+	nome TEXT NOT NULL,
+	ativo TEXT NOT NULL,
+	emial TEXT NOT NULL,
+	role INTEGER NOT NULL,
+	created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tipo(
+	id INTEGER PRIMARY KEY,
+	tipo TEXT NOT NULL
+);
+
 INSERT INTO turmas (descricao, horario, vagas, inicio, docente_id)
 VALUES 
    ("básico", "manhã", 10, "2020-08-01", 4),

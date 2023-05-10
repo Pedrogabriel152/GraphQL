@@ -35,7 +35,7 @@ const server = new ApolloServer({
     resolvers, 
     dataSources: () => {
         return {
-            usersApi: new UsersApi(),
+            usersApi: new UsersApi(dbConfig),
             turmasApi: new TurmasAPI(dbConfig),
             matriculaApi: new MatriculaApi(dbConfig)
         }

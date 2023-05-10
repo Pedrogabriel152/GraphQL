@@ -18,7 +18,6 @@ const userSchema = gql`
         ativo: Boolean
         email: String
         role: RolesTypes
-        createdAt: DateTime
     }
 
     type Role {
