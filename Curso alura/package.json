@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only ./api/index.ts",
+    "start": "DEBUG=knex:query ts-node-dev --respawn --transpile-only ./api/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +24,7 @@
     "@graphql-tools/utils": "^9.2.1",
     "apollo-server": "^3.12.0",
     "apollo-server-caching": "^3.3.0",
+    "dataloader": "^2.2.2",
     "datasource-sql": "^2.1.0",
     "graphql": "^16.6.0",
     "graphql-tools": "^8.3.20",

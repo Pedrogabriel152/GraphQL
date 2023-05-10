@@ -1,4 +1,5 @@
 import { SQLDataSource } from 'datasource-sql';
+const DataLoader = require('dataloader');
 
 class MatriculaApi extends SQLDataSource {
     public Resposta: any
@@ -29,7 +30,7 @@ class MatriculaApi extends SQLDataSource {
 
     public async getMatriculasPorUser(id: number){
         const matriculas = await this.db.select('*').from('matriculas').where({ estudante_id: Number(id)});
-        console.log(matriculas)
+        
         return matriculas;
     }
 
