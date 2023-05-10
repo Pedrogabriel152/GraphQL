@@ -26,7 +26,6 @@ class UsersApi extends SQLDataSource {
 
     public async getUserById(id) {
         const user = await this.db.select('*').from('users').where({id: Number(id)});
-        console.log(user)
         if(user[0].ativo){
             user[0].ativo = true;
         } else {
@@ -39,7 +38,6 @@ class UsersApi extends SQLDataSource {
     public async adicionaUser({user}){
         const role = await this.db.select('*').from('tipo').where({tipo: String(user.role)});
         user.role = role[0].id;
-        console.log(user)
         await this.db.insert(user).into('users');
         return ({
             id: user.id,

@@ -3,6 +3,8 @@ const DataLoader = require('dataloader');
 
 class MatriculaApi extends SQLDataSource {
     public Resposta: any
+    public matriculasLoader = new DataLoader(this.getMatriculasPorUser.bind(this));
+    public turmaLoader = new DataLoader(this.getMatriculasPorTurma.bind(this));
 
     constructor(dbConfig){
         super(dbConfig);
@@ -23,15 +25,22 @@ class MatriculaApi extends SQLDataSource {
         return this.Resposta;
     }
 
-    public async getMatriculasPorTurma(id: number) {
-        const matriculas = await this.db.select('*').from('matriculas').where({ turma_id: Number(id)});
+    public async getMatriculasPorTurma(ids) {
+        const matriculas = await this.db.select('*')
+            .from('matriculas')
+            .whereIn('turma_id', ids)
+            .select();
+        console.log(matriculas)
         return matriculas;
     }
 
-    public async getMatriculasPorUser(id: number){
-        const matriculas = await this.db.select('*').from('matriculas').where({ estudante_id: Number(id)});
+    public async getMatriculasPorUser(ids){
+        const matriculas = await this.db.select('*')
+            .from('matriculas')
+            .whereIn('estudante_id', ids)
+            .select();
         
-        return matriculas;
+        return ids.map((id:number) => matriculas.filter(matricula => matricula.estudante_id === id));
     }
 
     public async deletarMatricula(idMatricula) {

@@ -1,4 +1,5 @@
 import { SQLDataSource } from 'datasource-sql';
+const DataLoader = require('dataloader');
 
 class TurmasAPI extends SQLDataSource {
   public Resposta: any
@@ -28,6 +29,18 @@ class TurmasAPI extends SQLDataSource {
     const turmaInserida = await this.getTurma(novaTurmaId[0].id);
     return ({ ...turmaInserida });
   }
+
+  getTurmasCarregadas = new DataLoader(async idsTurmas => {
+    const turmas = await this.db
+      .select('*')
+      .from('turmas')
+      .whereIn('id', idsTurmas)
+ 
+ 
+    return idsTurmas
+      .map(id => turmas
+        .find(turma => turma.id === id))
+  })
 
   public  async atualizaTurma(novosDados) {
     await this.db
