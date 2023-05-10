@@ -20,7 +20,7 @@ const turmasResolvers = {
 
     Turma: {
         matriculas: (parent, __,{ dataSources }) => dataSources.matriculaApi.getMatriculasPorTurma(parent.id),
-        docente: (parent, __, { dataSources }) => dataSources.usersApi.getDocente(parent.id),
+        docente: (parent, __, { dataSources }) => dataSources.usersApi.getUserById(parent.docente_id),
     }
 };
 

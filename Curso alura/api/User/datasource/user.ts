@@ -73,16 +73,24 @@ class UsersApi extends SQLDataSource {
     }
     
     public async getDocente(id: number){
-        const turma = await this.db.select('*').from('turmas').where({id: Number(id)});
+        const  docente = await this.db('users as u')
+            .join('matriculas as m', 'm.estudante_id', 'u.id')
+            .join('turmas as t', 't.id', 'm.turma_id')
+            .select('u.id','u.nome', 'u.email', 'u.ativo', 'u.created_at', 'u.role')
+            .where({role: 2});
 
-        const users = await this.db.select('*')
-            .from('users').where({role: Number(2)})
+        const role = await this.db.select('*').from('tipo').where({id: docente[0].role})
 
-        const matricula = await this.db('users').select('users.nome', 'users.email', 'users.ativo', 'tipo.tipo')
-            .join('tipo', 'tipo.id', 'users.role')
-            .where({role: 2})
+        return ({
+            id: docente[0].id,
+            nome: docente[0].nome,
+            email: docente[0].email,
+            ativo: docente[0].ativo? true : false,
+            createdAt: docente[0].created_at,
+            role: role[0]
+        })
 
-            console.log(matricula);
+        
     }
 }
 
