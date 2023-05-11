@@ -13,8 +13,10 @@ class UsersApi extends SQLDataSource {
       };
   }
 
-    public async getUsers() {
-        const users = await this.db.select('*').from('users')
+    public async getUsers({ page = 1, limit = 4 }) {
+        const start = ((page - 1) * limit);
+        const users = await this.db.select('*').from('users').limit(limit).offset(start);
+        console.log(users)
         return users.map(async user => ({
             id: user.id,
             nome: user.nome,

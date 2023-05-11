@@ -1,4 +1,4 @@
-const { GraphQLScalarType } = require('graphql')
+const { GraphQLScalarType } = require('graphql');
 
 const turmasResolvers = {
     DateTime: new GraphQLScalarType({
@@ -9,7 +9,7 @@ const turmasResolvers = {
         parseLiteral: (ast) => new Date(ast.value).toISOString()
     }),
     Query: {
-        turmas: (root, args, { dataSources }, info) =>  dataSources.turmasApi.getTurmas(),
+        turmas: (root, args, { dataSources }, info) =>  dataSources.turmasApi.getTurmas(args),
         turma: (root, { id }, { dataSources }) => dataSources.turmasApi.getTurma(id)
     },
     Mutation: {

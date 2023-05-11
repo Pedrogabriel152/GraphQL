@@ -16,7 +16,7 @@ const userResolvers = {
     }),
 
     Query: {
-        users: (root, args, { dataSources }) => dataSources.usersApi.getUsers(),
+        users: (root, args, { dataSources }) => dataSources.usersApi.getUsers(args),
         user: (root, { id }, { dataSources }) => dataSources.usersApi.getUserById(id)
     },
 
